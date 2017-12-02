@@ -31,7 +31,7 @@ You can also set it up with a virtual host if you constantly use it.
 - Linux users follow this guide [How to set up Apache virtual hosting](https://www.linux.com/news/how-set-apache-virtual-hosting).
 - Windows users follow this guide [Full guideline to make VHOST (Virtual Host) on XAMPP/WAMP](https://stackoverflow.com/questions/27754367/how-to-set-up-apache-virtual-hosts-on-xampp-windows#27754990).
 
-#### 1
+#### Step 1
 
 Open CMD/Terminal and follow these instructions:
 
@@ -43,11 +43,11 @@ git clone https://github.com/aprilmintacpineda/time-tracker.git
 
 Once that's done, a folder called `time-tracker` will be created for you, this folder will contain the app itself.
 
-#### 2
+#### Step 2
 
 Create a file called `database.sqlite` in `time-tracker/database`
 
-#### 3
+#### Step 3
 
 Install dependencies
 
@@ -61,7 +61,7 @@ npm run test
 php artisan migrate
 ```
 
-#### 4
+#### Step 4
 
 Use it.
 
