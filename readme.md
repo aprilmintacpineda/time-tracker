@@ -18,13 +18,23 @@ please refer to the `package.json` and `composer.json`.
 - [NodeJS](https://nodejs.org/en/)
 - [NPM](https://www.npmjs.com/get-npm?utm_source=house&utm_medium=homepage&utm_campaign=free%20orgs&utm_term=Install%20npm)
 
-#### Environment
-
-The app uses SQLITE so no problem with the database, but you'll need PHP. Make sure to install the latest version of PHP
+#### you'll need PHP.
 
 - Linux users follow this guide [wikiHow to Install LAMP](https://www.wikihow.com/Install-LAMP).
 - Windows users follow this guide [wikiHow to Install XAMPP](https://www.wikihow.com/Install-XAMPP-for-Windows).
 - Alternatively, Windows user can use this [WAMPSERVER](http://www.wampserver.com/en/)
+
+#### you'll need SQLITE3 driver.
+
+For linux users:
+
+```
+sudo apt-get install php7.0-sqlite3
+```
+
+For windows users, you don't have to install anything.
+
+#### VHost
 
 You can also set it up with a virtual host if you constantly use it.
 
@@ -58,6 +68,9 @@ composer run post-create-project-cmd
 npm install
 # make sure that things are good
 npm run test
+# if the test does not show any failure, continue
+# else open an issue on the repository and copy paste the result.
+npm run build:production
 php artisan migrate
 ```
 
