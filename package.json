@@ -1,0 +1,134 @@
+{
+    "license": "MIT",
+    "private": true,
+    "author": {
+        "name": "April Mintac Pineda",
+        "email": "aprilmintacpineda@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aprilmintacpineda/time-tracker.git"
+    },
+    "scripts": {
+        "test": "jest --json --outputFile=jest-output.json",
+        "build": "webpack",
+        "build:watch": "webpack --watch",
+        "build:production": "webpack -p"
+    },
+    "babel": {
+        "presets": [
+            "env",
+            "react"
+        ],
+        "plugins": [
+            "babel-plugin-transform-object-rest-spread",
+            "babel-plugin-transform-class-properties"
+        ]
+    },
+    "jest": {
+        "testPathIgnorePatterns": [
+            "/node_modules/",
+            "/vendor"
+        ],
+        "testRegex": "\\.spec\\.js",
+        "setupFiles": [
+            "raf/polyfill"
+        ]
+    },
+    "eslintConfig": {
+        "env": {
+            "browser": true,
+            "commonjs": true,
+            "es6": true,
+            "node": true
+        },
+        "parser": "babel-eslint",
+        "parserOptions": {
+            "ecmaFeatures": {
+                "jsx": true
+            },
+            "sourceType": "module"
+        },
+        "rules": {
+            "no-undef-init": "error",
+            "no-multi-spaces": "error",
+            "no-extra-label": "error",
+            "no-floating-decimal": "error",
+            "no-global-assign": "error",
+            "no-fallthrough": "error",
+            "no-duplicate-case": "error",
+            "object-curly-spacing": [
+                "error",
+                "always"
+            ],
+            "array-bracket-spacing": [
+                "error",
+                "never"
+            ],
+            "computed-property-spacing": [
+                "error",
+                "never"
+            ],
+            "keyword-spacing": [
+                "error",
+                {
+                    "before": true,
+                    "after": true
+                }
+            ],
+            "linebreak-style": [
+                "error",
+                "unix"
+            ],
+            "quotes": [
+                "error",
+                "single"
+            ],
+            "semi": [
+                "error",
+                "always"
+            ],
+            "comma-dangle": [
+                "error",
+                "never"
+            ]
+        }
+    },
+    "devDependencies": {
+        "autoprefixer": "^7.1.4",
+        "babel-core": "^6.26.0",
+        "babel-eslint": "^8.0.1",
+        "babel-loader": "^7.1.2",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-react": "^6.24.1",
+        "css-loader": "^0.28.7",
+        "eslint": "^4.8.0",
+        "eslint-loader": "^1.9.0",
+        "extract-text-webpack-plugin": "^3.0.0",
+        "jest": "^21.2.1",
+        "node-sass": "^4.5.3",
+        "optimize-css-assets-webpack-plugin": "^3.2.0",
+        "postcss-loader": "^2.0.6",
+        "raf": "^3.3.2",
+        "react-test-renderer": "^16.0.0",
+        "sass-loader": "^6.0.6",
+        "style-loader": "^0.18.2",
+        "webpack": "^3.6.0"
+    },
+    "dependencies": {
+        "axios": "^0.16.2",
+        "babel-polyfill": "^6.26.0",
+        "history": "^4.7.2",
+        "jshint": "^2.9.5",
+        "prop-types": "^15.6.0",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0",
+        "react-redux": "^5.0.6",
+        "react-router": "^4.2.0",
+        "react-router-dom": "^4.2.2",
+        "redux": "^3.7.2",
+        "redux-saga": "^0.15.6"
+    }
+}
