@@ -84,7 +84,7 @@ Have fun using it! :-)
 ## Feedback
 
 - For a more private discussion, message me on my [linkedin account](https://linkedin.com/in/aprilmintacpineda).
-- For bugs, issues, questions, or feature request feel free to open an issue on this repo.
+- For bugs, issues, questions, or feature requests feel free to open an issue on this repo.
 
 ## Other links
 
