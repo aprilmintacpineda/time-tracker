@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 import View from '../components/View';
 import DockMessage from '../components/DockMessage';
 import Button from '../components/forms/Button';
+import Modal from '../components/Modal';
+// partials
+import CreateTaskFormModal from './partials/CreateTaskFormModal';
 // actions
 import { fetch } from '../redux/tasks/actions';
+import { fieldToggle as createTaskToggle } from '../redux/create_tasks/actions';
 // helpers
 import { delay } from '../helpers';
 
@@ -25,13 +29,15 @@ class Dashboard extends React.Component {
 		return (
 			<View>
 				<div>
+					<CreateTaskFormModal />
+
 					{
 						this.props.tasks.fetch.sending || (!this.props.tasks.fetch.sending && this.props.tasks.fetch.prestine)?
 							<DockMessage styled={false}>
 								<i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
 								<span className="sr-only">Loading...</span>
 							</DockMessage>
-						: this.props.tasks.fetch.status != 200?
+						: this.props.tasks.fetch.status == 500 && this.props.tasks.fetch.message?
 							<DockMessage styled={false}>
 								<p>{this.props.tasks.fetch.message}</p>
 							</DockMessage>
@@ -47,7 +53,7 @@ class Dashboard extends React.Component {
 						: 	<DockMessage styled={false}>
 								<p>You have no tasks yet.</p>
 								<Button
-									onClick={() => alert('clicked')}
+									onClick={this.props.createTaskToggle}
 									icon="plus"
 									text="Create"
 								/>
@@ -62,5 +68,6 @@ class Dashboard extends React.Component {
 export default connect(store => ({
 	tasks: { ...store.tasks }
 }), {
-	fetch
+	fetch,
+	createTaskToggle
 })(Dashboard);

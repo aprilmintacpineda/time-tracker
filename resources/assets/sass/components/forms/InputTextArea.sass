@@ -1,0 +1,24 @@
+.form-input-textarea-wrapper
+	p small
+		margin-left: 5px
+		color: gray
+	textarea
+		user-select: text !important
+		border: 1px solid #c9c9c9
+		border-radius: 4px
+		padding: 8px
+		resize: vertical
+		min-height: 250px
+		background: #ffffff
+		&:focus
+			box-shadow: 0 0 5px #c9c9c9
+	textarea.disabled
+		opacity: 0.35
+		cursor: not-allowed
+	textarea.occupy-space
+		width: 100%
+	textarea.with-errors
+		border: 1px solid $danger-color
+		color: $danger-color
+		&:focus
+			box-shadow: 0 0 5px $danger-color

@@ -3,14 +3,27 @@
 	margin: 0
 	padding: 0
 	box-sizing: border-box
+	user-select: none
+
+@import './variables'
 
 // mixins
 @import './mixins/alignment'
+@import './mixins/flexible-settings'
+
+// layouts
+@import './layouts/basic'
+
+// partials
+@import './partials/CreateTaskFormModal'
 
 // component styles
+@import './components/Icon'
 @import './components/View'
 @import './components/Sidebar'
 @import './components/Dockmessage'
-@import './components/Button'
 @import './components/Modal'
 @import './components/FloatingMenu'
+@import './components/forms/Button'
+@import './components/forms/InputText'
+@import './components/forms/InputTextArea'

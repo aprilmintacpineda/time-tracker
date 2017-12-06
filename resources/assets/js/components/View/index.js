@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 // components
 import Sidebar from './Sidebar';
 import FloatingMenu from '../FloatingMenu';
-import Modal from '../Modal';
+// actions
+import { fieldToggle as createTaskToggle } from '../../redux/create_tasks/actions';
 
-export default class View extends React.Component {
+class View extends React.Component {
 	render() {
 		return (
 			<div className="view-wrapper">
@@ -13,12 +15,12 @@ export default class View extends React.Component {
 						{
 							text: 'Create Collection',
 							icon: 'plus',
-							onClick: () => alert('Create Collection')
+							onClick: () => alert('create colection')
 						},
 						{
 							text: 'Create Task',
 							icon: 'plus',
-							onClick: () => alert('Create Task')
+							onClick: this.props.createTaskToggle
 						}
 					]}
 				/>
@@ -28,3 +30,7 @@ export default class View extends React.Component {
 		);
 	}
 }
+
+export default connect(null, {
+	createTaskToggle
+})(View);

@@ -1,29 +1,51 @@
-.modal
+.modal-wrapper, .modal-bg, .modal-overlay-wrapper
 	position: fixed
 	top: 0
 	left: 0
 	width: 100%
 	height: 100%
+.modal-wrapper
 	z-index: 100
-	background: rgba(0, 0, 0, 0.5)
-	overflow-y: auto
+	.modal-bg
+		background: rgba(0, 0, 0, 0.5)
+		z-index: 100
+	.modal-overlay-wrapper
+		overflow: auto
+		z-index: 101
+		.dismiss-btn.disabled
+			cursor: not-allowed
+			opacity: 0.35
+		.dismiss-btn
+			display: block
+			position: absolute
+			top: 10px
+			right: 5px
+			color: #ffffff
+			display: block
+			padding: 5px
+			cursor: pointer
+			.with-icon
+				padding: 0
+				.icon
+					position: relative
+					font-size: 28px
 	.modal-overlay
 		position: absolute
-		+pCenter
+		+hCenter
+		top: 50px
 		background: #ffffff
+		box-shadow: 0 0 5px #000000
 		padding: 20px
 		border-radius: 5px
-		min-width: 400px
-		max-width: 80%
-		margin-top: 50px
-		&:after
+		display: block
+		h1.title
+			font-weight: normal
+			font-size: 24px
+			margin-bottom: 20px
+		&:after, &:before
 			display: block
 			content: ''
 			padding: 10px
 			position: absolute
 		&:after
 			top: 100%
-		h1
-			font-weight: normal
-			font-size: 24px
-			margin-bottom: 20px

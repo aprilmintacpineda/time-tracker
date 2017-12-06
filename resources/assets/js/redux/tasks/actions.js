@@ -1,7 +1,8 @@
 export const types = {
 	fetch: 'TASKS_FETCH',
 	fetching: 'TASKS_FETCHING',
-	fetched: 'TASKS_FETCHED'
+	fetched: 'TASKS_FETCHED',
+	prepend: 'TASKS_PREPEND'
 };
 
 export const fetch = () => ({
@@ -15,4 +16,9 @@ export const fetching = () => ({
 export const fetched = payload => ({
 	type: types.fetched,
 	...payload
+});
+
+export const prepend = data => ({
+	type: types.prepend,
+	data
 });

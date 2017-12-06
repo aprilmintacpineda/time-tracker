@@ -31,7 +31,7 @@ class Sidebar extends React.Component {
 							<i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
 							<span className="sr-only">Loading...</span>
 						</DockMessage>
-					: this.props.collections.fetch.status != 200?
+					: this.props.collections.fetch.status == 500 && this.props.collections.fetch.message?
 						<DockMessage styled={false}>
 							<i className="fa fa-exclamation-circle" aria-hidden="true"></i> {this.props.collections.fetch.message}
 						</DockMessage>

@@ -1,0 +1,16 @@
+=flexibleMarginBottom($amount)
+	margin-bottom: $amount
+	&:last-child
+		margin-bottom: 0
+=flexibleMarginRight($amount)
+	margin-right: $amount
+	&:last-child
+		margin-right: 0
+=flexiblePaddingRight($amount)
+	padding-right: $amount
+	&:last-child
+		padding-right: 0
+=flexibleSetWidth($only-one, $many)
+	width: $many
+	&:only-child
+		width: $only-one
