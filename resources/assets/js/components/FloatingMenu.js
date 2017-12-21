@@ -43,7 +43,7 @@ class FloatingMenu extends React.Component {
                     {
                       menu.icon
                       ? <Icon icon={menu.icon} text={menu.text} />
-                      :   menu.text
+                      : menu.text
                     }
                   </a>
                 </li>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({ icon, text, className = null, standAlone = false }) =>
+export default ({ icon, text = null, className = null, standAlone = false }) =>
   <span className={'with-icon' + (className? ' ' + className : '') + (standAlone? ' stand-alone': '')}>
     {
       icon == 'plus'
@@ -17,6 +17,10 @@ export default ({ icon, text, className = null, standAlone = false }) =>
       ? <i className="fa fa-times-circle icon" aria-hidden="true"></i>
       : icon == 'back'
       ? <i className="fa fa-arrow-circle-left icon" aria-hidden="true"></i>
+      : icon == 'player-play'
+      ? <i className="fa fa-play icon" aria-hidden="true"></i>
+      : icon == 'player-pause'
+      ? <i className="fa fa-pause icon" aria-hidden="true"></i>
       : null
     } { text }
   </span>;

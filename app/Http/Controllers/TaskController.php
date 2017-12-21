@@ -15,6 +15,7 @@ class TaskController extends Controller
 
 		return Task::offset($offset)
 			->limit($limit)
+			->orderBy('created_at', 'desc')
 			->get();
 	}
 

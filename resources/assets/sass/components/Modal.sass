@@ -9,6 +9,7 @@
   .modal-bg
     background: rgba(0, 0, 0, 0.5)
     z-index: 100
+    animation: modal-bg 300ms
   .modal-overlay-wrapper
     overflow: auto
     z-index: 101
@@ -30,6 +31,7 @@
           position: relative
           font-size: 28px
   .modal-overlay
+    animation: modal-o 300ms
     position: absolute
     +hCenter
     top: 50px
@@ -49,3 +51,13 @@
       position: absolute
     &:after
       top: 100%
+@keyframes modal-o
+  0%
+    top: -100%
+  100%
+    top: 50px
+@keyframes modal-bg
+  0%
+    background: rgba(0, 0, 0, 0)
+  100%
+    background: rgba(0, 0, 0, 0.5)

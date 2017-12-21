@@ -35,6 +35,31 @@
   color: #abcafc;
   cursor: pointer; }
 
+.task-list {
+  margin: 10px;
+  width: calc(100% - 20px);
+  border: 1px solid #d0d1d5;
+  background: #ffffff; }
+  .task-list tr.odd {
+    background: #d4d5d6; }
+  .task-list th {
+    padding: 10px;
+    background: #006699;
+    color: #ffffff;
+    font-weight: normal; }
+  .task-list td {
+    padding: 10px;
+    border: 1px solid #d0d1d5; }
+    .task-list td:last-child {
+      width: 100px; }
+  .task-list a {
+    cursor: pointer;
+    opacity: 0.6; }
+    .task-list a:hover {
+      opacity: 1; }
+  .task-list .playing {
+    color: blue; }
+
 .new-task-fields-wrapper:after {
   content: '';
   display: block;
@@ -134,7 +159,9 @@
   z-index: 100; }
   .modal-wrapper .modal-bg {
     background: rgba(0, 0, 0, 0.5);
-    z-index: 100; }
+    z-index: 100;
+    -webkit-animation: modal-bg 300ms;
+            animation: modal-bg 300ms; }
   .modal-wrapper .modal-overlay-wrapper {
     overflow: auto;
     z-index: 101; }
@@ -156,6 +183,8 @@
           position: relative;
           font-size: 28px; }
   .modal-wrapper .modal-overlay {
+    -webkit-animation: modal-o 300ms;
+            animation: modal-o 300ms;
     position: absolute;
     left: 50%;
     -webkit-transform: translate(-50%, 0);
@@ -178,6 +207,30 @@
       position: absolute; }
     .modal-wrapper .modal-overlay:after {
       top: 100%; }
+
+@-webkit-keyframes modal-o {
+  0% {
+    top: -100%; }
+  100% {
+    top: 50px; } }
+
+@keyframes modal-o {
+  0% {
+    top: -100%; }
+  100% {
+    top: 50px; } }
+
+@-webkit-keyframes modal-bg {
+  0% {
+    background: transparent; }
+  100% {
+    background: rgba(0, 0, 0, 0.5); } }
+
+@keyframes modal-bg {
+  0% {
+    background: transparent; }
+  100% {
+    background: rgba(0, 0, 0, 0.5); } }
 
 .floating-menu {
   position: absolute;

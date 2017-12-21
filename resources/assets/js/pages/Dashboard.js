@@ -5,8 +5,10 @@ import View from '../components/View';
 import DockMessage from '../components/DockMessage';
 import Button from '../components/forms/Button';
 import Modal from '../components/Modal';
+import Icon from '../components/Icon';
 // partials
 import CreateTaskFormModal from './partials/CreateTaskFormModal';
+import Timer from './partials/Timer';
 // actions
 import { fetch } from '../redux/tasks/actions';
 import { fieldToggle as createTaskToggle } from '../redux/create_tasks/actions';
@@ -26,6 +28,8 @@ class Dashboard extends React.Component {
   }
 
   render() {
+    console.log(this.props.tasks.data[0]);
+
     return (
       <View>
         <div>
@@ -42,15 +46,24 @@ class Dashboard extends React.Component {
                 <p>{this.props.tasks.fetch.message}</p>
               </DockMessage>
             : this.props.tasks.data.length?
-              <div className="task-list">
-                {this.props.tasks.data.map((task, i) =>
-                  <div className="task" key={i}>
-                    <h1>{task.title}</h1>
-                    <p>{task.description}</p>
-                    <p>{}</p>
-                  </div>
-                )}
-              </div>
+              <table className="task-list">
+              <tbody>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Date Created</th>
+                    <th colSpan={2}>Time</th>
+                  </tr>
+                  {this.props.tasks.data.map((task, i) =>
+                    <tr className={(i % 2? 'task odd' : 'task even')} key={i}>
+                      <td>{task.title}</td>
+                      <td>{task.description? task.description : '------- none provided -------'}</td>
+                      <td>{new Date(task.created_at).toLocaleString()}</td>
+                      <td><Timer task={task} task_index={i} /></td>
+                    </tr>
+                  )}
+              </tbody>
+              </table>
             : <DockMessage styled={false}>
                 <p>You have no tasks yet.</p>
                 <Button

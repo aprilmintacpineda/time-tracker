@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '../Icon';
-import { random } from '../../helpers/numbers';
+import { random } from '../../helpers';
 
 export default ({ onChange = null, errors = [], value = '', placeholder = null, label = null, disabled = false, optional = false, occupySpace = false, size = null, id = random() }) => 
   <div className="form-input-text-wrapper">

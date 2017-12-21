@@ -52,4 +52,80 @@ describe('Reducers: tasks', () => {
       data: [{ test: 1 }]
     });
   });
+
+  it('handles prepend', () => {
+    expect(reducer(initial_state, {
+      type: actionTypes.prepend,
+      data: [{
+        random_data: 'test data',
+        radom: 'another test data'
+      }]
+    })).toEqual({
+      ...initial_state,
+      data: [
+        {
+          random_data: 'test data',
+          radom: 'another test data'
+        }
+      ]
+    })
+  });
+
+  it('handles runTimer', () => {
+    let timestamp = new Date().getTime();
+
+    expect(reducer({
+      ...initial_state,
+      data: [{
+        first_started: null,
+        last_stopped: null,
+        is_playing: false
+      }]
+    }, {
+      type: actionTypes.runTimer,
+      task: {
+        first_started: null,
+        last_stopped: null,
+        is_playing: false
+      },
+      task_index: 0,
+      timestamp
+    })).toEqual({
+      ...initial_state,
+      data: [{
+        first_started: timestamp,
+        last_stopped: null,
+        is_playing: true
+      }]
+    });
+  });
+
+  it('handles pauseTimer', () => {
+    let timestamp = new Date().getTime();
+
+    expect(reducer({
+      ...initial_state,
+      data: [{
+        first_started: timestamp - 14400,
+        last_stopped: null,
+        is_playing: true
+      }]
+    }, {
+      type: actionTypes.pauseTimer,
+      task: {
+        first_started: timestamp - 14400,
+        last_stopped: null,
+        is_playing: true
+      },
+      task_index: 0,
+      timestamp
+    })).toEqual({
+      ...initial_state,
+      data: [{
+        first_started: timestamp - 14400,
+        last_stopped: timestamp,
+        is_playing: false
+      }]
+    });
+  });
 });

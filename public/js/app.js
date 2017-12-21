@@ -3127,7 +3127,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = function (_ref) {
   var icon = _ref.icon,
-      text = _ref.text,
+      _ref$text = _ref.text,
+      text = _ref$text === undefined ? null : _ref$text,
       _ref$className = _ref.className,
       className = _ref$className === undefined ? null : _ref$className,
       _ref$standAlone = _ref.standAlone,
@@ -3135,7 +3136,7 @@ exports.default = function (_ref) {
   return _react2.default.createElement(
     'span',
     { className: 'with-icon' + (className ? ' ' + className : '') + (standAlone ? ' stand-alone' : '') },
-    icon == 'plus' ? _react2.default.createElement('span', { className: 'fa fa-plus icon', 'aria-hidden': 'true' }) : icon == 'error' ? _react2.default.createElement('span', { className: 'fa fa-exclamation-circle icon', 'aria-hidden': 'true' }) : icon == 'cancel' ? _react2.default.createElement('i', { className: 'fa fa-ban icon', 'aria-hidden': 'true' }) : icon == 'send' ? _react2.default.createElement('i', { className: 'fa fa-paper-plane icon', 'aria-hidden': 'true' }) : icon == 'close' ? _react2.default.createElement('i', { className: 'fa fa-times icon', 'aria-hidden': 'true' }) : icon == 'circled-close' ? _react2.default.createElement('i', { className: 'fa fa-times-circle icon', 'aria-hidden': 'true' }) : icon == 'back' ? _react2.default.createElement('i', { className: 'fa fa-arrow-circle-left icon', 'aria-hidden': 'true' }) : null,
+    icon == 'plus' ? _react2.default.createElement('span', { className: 'fa fa-plus icon', 'aria-hidden': 'true' }) : icon == 'error' ? _react2.default.createElement('span', { className: 'fa fa-exclamation-circle icon', 'aria-hidden': 'true' }) : icon == 'cancel' ? _react2.default.createElement('i', { className: 'fa fa-ban icon', 'aria-hidden': 'true' }) : icon == 'send' ? _react2.default.createElement('i', { className: 'fa fa-paper-plane icon', 'aria-hidden': 'true' }) : icon == 'close' ? _react2.default.createElement('i', { className: 'fa fa-times icon', 'aria-hidden': 'true' }) : icon == 'circled-close' ? _react2.default.createElement('i', { className: 'fa fa-times-circle icon', 'aria-hidden': 'true' }) : icon == 'back' ? _react2.default.createElement('i', { className: 'fa fa-arrow-circle-left icon', 'aria-hidden': 'true' }) : icon == 'player-play' ? _react2.default.createElement('i', { className: 'fa fa-play icon', 'aria-hidden': 'true' }) : icon == 'player-pause' ? _react2.default.createElement('i', { className: 'fa fa-pause icon', 'aria-hidden': 'true' }) : null,
     ' ',
     text
   );
@@ -3363,7 +3364,9 @@ var types = exports.types = {
   fetch: 'TASKS_FETCH',
   fetching: 'TASKS_FETCHING',
   fetched: 'TASKS_FETCHED',
-  prepend: 'TASKS_PREPEND'
+  prepend: 'TASKS_PREPEND',
+  runTimer: 'TASKS_RUN_TIMER',
+  pauseTimer: 'TASKS_PAUSE_TIMER'
 };
 
 var fetch = exports.fetch = function fetch() {
@@ -3388,6 +3391,24 @@ var prepend = exports.prepend = function prepend(data) {
   return {
     type: types.prepend,
     data: data
+  };
+};
+
+var runTimer = exports.runTimer = function runTimer(task, i, timestamp) {
+  return {
+    type: types.runTimer,
+    task_index: i,
+    task: task,
+    timestamp: timestamp
+  };
+};
+
+var pauseTimer = exports.pauseTimer = function pauseTimer(task, i, timestamp) {
+  return {
+    type: types.pauseTimer,
+    task_index: i,
+    task: task,
+    timestamp: timestamp
   };
 };
 
@@ -4184,6 +4205,16 @@ var delay = exports.delay = function delay(secs) {
       resolve();
     }, secs * 1000);
   });
+};
+
+var random = exports.random = function random() {
+  var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 999999999;
+  return min == max ? min : Math.floor(Math.random() * (max > min ? max : min)) + (max > min ? min : max);
+};
+
+var timeSpent = exports.timeSpent = function timeSpent(first_started, last_stopped) {
+  return !first_started || !last_stopped ? '00:00:00' : (last_stopped - first_started) / 1000;
 };
 
 /***/ }),
@@ -10022,22 +10053,7 @@ exports.default = function (_ref) {
 };
 
 /***/ }),
-/* 199 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var random = exports.random = function random() {
-  var min = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-  var max = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 999999999;
-  return min == max ? min : Math.floor(Math.random() * (max > min ? max : min)) + (max > min ? min : max);
-};
-
-/***/ }),
+/* 199 */,
 /* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34947,7 +34963,27 @@ exports.default = function () {
 
     case _actions.types.prepend:
       return _extends({}, state, {
-        data: [].concat(_toConsumableArray(action.data), _toConsumableArray(state.data))
+        data: [].concat(_toConsumableArray(action.data)).reverse().concat(state.data)
+      });
+
+    case _actions.types.runTimer:
+      return _extends({}, state, {
+        data: state.data.map(function (data, i) {
+          return i == action.task_index ? _extends({}, data, {
+            first_started: !data.first_started ? action.timestamp : data.first_started,
+            is_playing: true
+          }) : _extends({}, data);
+        })
+      });
+
+    case _actions.types.pauseTimer:
+      return _extends({}, state, {
+        data: state.data.map(function (data, i) {
+          return i == action.task_index ? _extends({}, data, {
+            last_stopped: action.timestamp,
+            is_playing: false
+          }) : _extends({}, data);
+        })
       });
 
     default:
@@ -39914,9 +39950,17 @@ var _Modal = __webpack_require__(198);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
+var _Icon = __webpack_require__(59);
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
 var _CreateTaskFormModal = __webpack_require__(515);
 
 var _CreateTaskFormModal2 = _interopRequireDefault(_CreateTaskFormModal);
+
+var _Timer = __webpack_require__(520);
+
+var _Timer2 = _interopRequireDefault(_Timer);
 
 var _actions = __webpack_require__(65);
 
@@ -39960,6 +40004,8 @@ var Dashboard = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      console.log(this.props.tasks.data[0]);
+
       return _react2.default.createElement(
         _View2.default,
         null,
@@ -39985,25 +40031,62 @@ var Dashboard = function (_React$Component) {
               this.props.tasks.fetch.message
             )
           ) : this.props.tasks.data.length ? _react2.default.createElement(
-            'div',
+            'table',
             { className: 'task-list' },
-            this.props.tasks.data.map(function (task, i) {
-              return _react2.default.createElement(
-                'div',
-                { className: 'task', key: i },
+            _react2.default.createElement(
+              'tbody',
+              null,
+              _react2.default.createElement(
+                'tr',
+                null,
                 _react2.default.createElement(
-                  'h1',
+                  'th',
                   null,
-                  task.title
+                  'Title'
                 ),
                 _react2.default.createElement(
-                  'p',
+                  'th',
                   null,
-                  task.description
+                  'Description'
                 ),
-                _react2.default.createElement('p', null)
-              );
-            })
+                _react2.default.createElement(
+                  'th',
+                  null,
+                  'Date Created'
+                ),
+                _react2.default.createElement(
+                  'th',
+                  { colSpan: 2 },
+                  'Time'
+                )
+              ),
+              this.props.tasks.data.map(function (task, i) {
+                return _react2.default.createElement(
+                  'tr',
+                  { className: i % 2 ? 'task odd' : 'task even', key: i },
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    task.title
+                  ),
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    task.description ? task.description : '------- none provided -------'
+                  ),
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    new Date(task.created_at).toLocaleString()
+                  ),
+                  _react2.default.createElement(
+                    'td',
+                    null,
+                    _react2.default.createElement(_Timer2.default, { task: task, task_index: i })
+                  )
+                );
+              })
+            )
           ) : _react2.default.createElement(
             _DockMessage2.default,
             { styled: false },
@@ -40640,7 +40723,7 @@ var _Icon = __webpack_require__(59);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _numbers = __webpack_require__(199);
+var _helpers = __webpack_require__(87);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40664,7 +40747,7 @@ exports.default = function (_ref) {
       _ref$size = _ref.size,
       size = _ref$size === undefined ? null : _ref$size,
       _ref$id = _ref.id,
-      id = _ref$id === undefined ? (0, _numbers.random)() : _ref$id;
+      id = _ref$id === undefined ? (0, _helpers.random)() : _ref$id;
 
   return _react2.default.createElement(
     'div',
@@ -40730,7 +40813,7 @@ var _Icon = __webpack_require__(59);
 
 var _Icon2 = _interopRequireDefault(_Icon);
 
-var _numbers = __webpack_require__(199);
+var _helpers = __webpack_require__(87);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40752,7 +40835,7 @@ exports.default = function (_ref) {
       _ref$occupySpace = _ref.occupySpace,
       occupySpace = _ref$occupySpace === undefined ? false : _ref$occupySpace,
       _ref$id = _ref.id,
-      id = _ref$id === undefined ? (0, _numbers.random)() : _ref$id;
+      id = _ref$id === undefined ? (0, _helpers.random)() : _ref$id;
 
   return _react2.default.createElement(
     'div',
@@ -40797,6 +40880,150 @@ exports.default = function (_ref) {
     }) : null
   );
 };
+
+/***/ }),
+/* 518 */,
+/* 519 */,
+/* 520 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(5);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(55);
+
+var _Icon = __webpack_require__(59);
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+var _actions = __webpack_require__(65);
+
+var _helpers = __webpack_require__(87);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// components
+
+// actions
+
+// helpers
+
+
+var Timer = function (_React$Component) {
+  _inherits(Timer, _React$Component);
+
+  function Timer(props) {
+    _classCallCheck(this, Timer);
+
+    // state
+    var _this = _possibleConstructorReturn(this, (Timer.__proto__ || Object.getPrototypeOf(Timer)).call(this, props));
+
+    _this.state = {
+      timeLapse: 0,
+      timer: null,
+      timeSpent: null
+    };
+
+    _this.handleRunTimer = _this.handleRunTimer.bind(_this);
+    _this.handlePauseTimer = _this.handlePauseTimer.bind(_this);
+    _this.displayTimeLapse = _this.displayTimeLapse.bind(_this);
+    _this.tick = _this.tick.bind(_this);
+    return _this;
+  }
+
+  _createClass(Timer, [{
+    key: 'tick',
+    value: function tick() {
+      this.setState(_extends({}, this.state, {
+        timeLapse: this.state.timeLapse + 1
+      }));
+    }
+  }, {
+    key: 'handlePauseTimer',
+    value: function handlePauseTimer() {
+      this.props.pauseTimer(this.props.task, this.props.task_index, new Date().getTime());
+      clearInterval(this.state.timer);
+      this.setState(_extends({}, this.state, {
+        timer: null
+      }));
+    }
+  }, {
+    key: 'handleRunTimer',
+    value: function handleRunTimer() {
+      this.props.runTimer(this.props.task, this.props.task_index, new Date().getTime());
+      var timer = setInterval(this.tick, 1000);
+      this.setState(_extends({}, this.state, {
+        timer: timer
+      }));
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState(_extends({}, this.state, {
+        timeSpent: this.props.task.first_started || this.props.task.last_stopped ? 0 : this.props.task.is_playing && this.props.task.last_stopped ? new Date().getTime() - this.props.task.first_started : this.props.task.last_stopped - this.props.task.first_started
+      }));
+    }
+  }, {
+    key: 'displayTimeLapse',
+    value: function displayTimeLapse(seconds) {
+      var h = Math.floor(seconds / 3600);
+      var m = Math.floor(seconds / 60 % 60);
+      var s = Math.floor(seconds % 60);
+
+      return (h.toString().length > 1 ? h : '0' + h) + ':' + (m.toString().length > 1 ? m : '0' + m) + ':' + (s.toString().length > 1 ? s : '0' + s);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'timer' },
+        _react2.default.createElement(
+          'div',
+          { className: this.state.timer ? 'playing' : '' },
+          this.state.timer ? this.displayTimeLapse(this.state.timeSpent + this.state.timeLapse) : this.displayTimeLapse(this.state.timeSpent)
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          this.props.task.is_playing == 1 ? _react2.default.createElement(
+            'a',
+            { onClick: this.handlePauseTimer },
+            _react2.default.createElement(_Icon2.default, { icon: 'player-pause', text: 'Pause' })
+          ) : _react2.default.createElement(
+            'a',
+            { onClick: this.handleRunTimer },
+            _react2.default.createElement(_Icon2.default, { icon: 'player-play', text: 'Run' })
+          )
+        )
+      );
+    }
+  }]);
+
+  return Timer;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRedux.connect)(null, {
+  runTimer: _actions.runTimer,
+  pauseTimer: _actions.pauseTimer
+})(Timer);
 
 /***/ })
 /******/ ]);

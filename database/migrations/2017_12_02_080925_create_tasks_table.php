@@ -18,6 +18,7 @@ class CreateTasksTable extends Migration
             $table->string('title', 255);
             $table->string('description', 255)->nullable();
             $table->bigInteger('collection_id')->unsigned()->nullable();
+            $table->boolean('is_playing')->default(false);
             $table->timestamp('first_started')->nullable();
             $table->timestamp('last_stopped')->nullable();
             $table->timestamps();

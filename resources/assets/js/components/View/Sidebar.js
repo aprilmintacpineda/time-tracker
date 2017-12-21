@@ -39,7 +39,7 @@ class Sidebar extends React.Component {
             <ul>
               {this.props.collections.data.map(collection => <li>collection.title</li>)}
             </ul>
-          :   <div>
+          : <div>
               <p>You have no collections yet.</p>
               <Button
                 onClick={() => alert('clicked')}
