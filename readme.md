@@ -7,7 +7,7 @@ Time Tracker is a web based app that allows you to track your time on a specific
 
 **Last updated: December 2, 2017 11:00h**
 
-## Created with
+## Technologies used
 
 please refer to the `package.json` and `composer.json`.
 
@@ -22,7 +22,7 @@ please refer to the `package.json` and `composer.json`.
 
 - Linux users follow this guide [wikiHow to Install LAMP](https://www.wikihow.com/Install-LAMP).
 - Windows users follow this guide [wikiHow to Install XAMPP](https://www.wikihow.com/Install-XAMPP-for-Windows).
-- Alternatively, Windows user can use this [WAMPSERVER](http://www.wampserver.com/en/)
+- Alternatively, Windows users can use [WAMPSERVER](http://www.wampserver.com/en/)
 
 #### you'll need SQLITE3 driver.
 
@@ -45,9 +45,8 @@ You can also set it up with a virtual host if you constantly use it.
 
 Open CMD/Terminal and follow these instructions:
 
-```ruby
-# you obviously can put this wherever you need to put it
-cd to/where/you/want
+```
+cd to/wherever/you/want
 git clone https://github.com/aprilmintacpineda/time-tracker.git
 ```
 
@@ -55,21 +54,23 @@ Once that's done, a folder called `time-tracker` will be created for you, this f
 
 #### Step 2
 
-Create a file called `database.sqlite` in `time-tracker/database`
+Create a file called `database.sqlite` in `time-tracker/database` folder.
 
 #### Step 3
 
-Install dependencies
+Install dependencies.
 
-```ruby
+```json
+// php dependencies
 composer install
 composer run post-root-package-install
 composer run post-create-project-cmd
+// javascript dependencies
 npm install
-# make sure that things are good
+// make sure that things are good
 npm run test
-# if the test does not show any failure, continue
-# else open an issue on the repository and copy paste the result.
+// if the test does not show any failure, continue
+// else open an issue on the repository and copy paste the result.
 npm run build:production
 php artisan migrate
 ```
@@ -88,7 +89,8 @@ Do this if:
 - You're having trouble setting it up on a vhost.
 - You're having trouble opening it with XAMPP.
 
-```
+```json
+// this will create a server on localhost:8000
 php artisan serve
 ```
 
