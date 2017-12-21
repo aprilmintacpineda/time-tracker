@@ -10,6 +10,10 @@ class Task extends Model
 		'id',
 		'title',
 		'description',
-		'collection_id'
+		'collection_id',
+		'is_playing',
+		'first_started',
+		'last_stopped',
+		'secondsSpent'
 	];
 }

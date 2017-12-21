@@ -70,7 +70,9 @@ class Timer extends React.Component {
   componentWillMount() {
     this.setState({
       ...this.state,
-      secondsSpent: parseInt(this.props.task.secondsSpent)
+      secondsSpent: this.props.task.secondsSpent
+        ? parseInt(this.props.task.secondsSpent)
+        : 0
     }, () => {
       if (this.props.task.is_playing == 1) {
         this.startCounting();
@@ -79,6 +81,8 @@ class Timer extends React.Component {
   }
 
   render() {
+    console.log(this.props.task);
+
     return (
       <div className="timer">
         <div className={this.state.timer? 'playing' : ''}>

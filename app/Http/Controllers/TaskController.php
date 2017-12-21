@@ -38,6 +38,6 @@ class TaskController extends Controller
 			]);
 		}
 
-		return $createdTasks;
+		return response()->json($createdTasks);
 	}
 }
