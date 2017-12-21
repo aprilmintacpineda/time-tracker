@@ -94,7 +94,7 @@ Do this if:
 php artisan serve
 ```
 
-Have fun using it! :-)
+I hope you find it useful! :-)
 
 ## Feedback
 
