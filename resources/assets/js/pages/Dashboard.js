@@ -28,8 +28,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    console.log(this.props.tasks.data[0]);
-
     return (
       <View>
         <div>

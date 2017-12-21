@@ -108,6 +108,7 @@ describe('Reducers: tasks', () => {
       data: [{
         first_started: timestamp - 14400,
         last_stopped: null,
+        secondsSpent: 60,
         is_playing: true
       }]
     }, {
@@ -118,12 +119,14 @@ describe('Reducers: tasks', () => {
         is_playing: true
       },
       task_index: 0,
-      timestamp
+      timestamp,
+      secondsSpent: 100
     })).toEqual({
       ...initial_state,
       data: [{
         first_started: timestamp - 14400,
         last_stopped: timestamp,
+        secondsSpent: 100,
         is_playing: false
       }]
     });

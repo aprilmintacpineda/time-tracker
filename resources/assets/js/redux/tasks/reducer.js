@@ -58,6 +58,7 @@ export default (state = initial_state, action) => {
         ? {
             ...data,
             last_stopped: action.timestamp,
+            secondsSpent: action.secondsSpent,
             is_playing: false
          }
         : { ...data })

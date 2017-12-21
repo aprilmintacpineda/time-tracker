@@ -32,9 +32,10 @@ export const runTimer = (task, i, timestamp) => ({
   timestamp
 });
 
-export const pauseTimer = (task, i, timestamp) => ({
+export const pauseTimer = (task, i, timestamp, secondsSpent) => ({
   type: types.pauseTimer,
   task_index: i,
   task,
-  timestamp
+  timestamp,
+  secondsSpent
 });

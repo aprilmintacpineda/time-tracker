@@ -3403,12 +3403,13 @@ var runTimer = exports.runTimer = function runTimer(task, i, timestamp) {
   };
 };
 
-var pauseTimer = exports.pauseTimer = function pauseTimer(task, i, timestamp) {
+var pauseTimer = exports.pauseTimer = function pauseTimer(task, i, timestamp, secondsSpent) {
   return {
     type: types.pauseTimer,
     task_index: i,
     task: task,
-    timestamp: timestamp
+    timestamp: timestamp,
+    secondsSpent: secondsSpent
   };
 };
 
@@ -34981,6 +34982,7 @@ exports.default = function () {
         data: state.data.map(function (data, i) {
           return i == action.task_index ? _extends({}, data, {
             last_stopped: action.timestamp,
+            secondsSpent: action.secondsSpent,
             is_playing: false
           }) : _extends({}, data);
         })
@@ -40004,8 +40006,6 @@ var Dashboard = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log(this.props.tasks.data[0]);
-
       return _react2.default.createElement(
         _View2.default,
         null,
@@ -40936,16 +40936,15 @@ var Timer = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Timer.__proto__ || Object.getPrototypeOf(Timer)).call(this, props));
 
     _this.state = {
-      timeLapse: 0,
       timer: null,
-      timeSpent: null
+      secondsSpent: 0
     };
 
     _this.handleRunTimer = _this.handleRunTimer.bind(_this);
     _this.handlePauseTimer = _this.handlePauseTimer.bind(_this);
     _this.stopCounting = _this.stopCounting.bind(_this);
     _this.startCounting = _this.startCounting.bind(_this);
-    _this.displayTimeLapse = _this.displayTimeLapse.bind(_this);
+    _this.calculateTimeSpent = _this.calculateTimeSpent.bind(_this);
     _this.tick = _this.tick.bind(_this);
     return _this;
   }
@@ -40954,13 +40953,13 @@ var Timer = function (_React$Component) {
     key: 'tick',
     value: function tick() {
       this.setState(_extends({}, this.state, {
-        timeLapse: this.state.timeLapse + 1
+        secondsSpent: this.state.secondsSpent + 1
       }));
     }
   }, {
     key: 'handlePauseTimer',
     value: function handlePauseTimer() {
-      this.props.pauseTimer(this.props.task, this.props.task_index, new Date().getTime());
+      this.props.pauseTimer(this.props.task, this.props.task_index, new Date().getTime(), this.state.secondsSpent);
       this.stopCounting();
     }
   }, {
@@ -40986,8 +40985,8 @@ var Timer = function (_React$Component) {
       }));
     }
   }, {
-    key: 'displayTimeLapse',
-    value: function displayTimeLapse(seconds) {
+    key: 'calculateTimeSpent',
+    value: function calculateTimeSpent(seconds) {
       var h = Math.floor(seconds / 3600);
       var m = Math.floor(seconds / 60 % 60);
       var s = Math.floor(seconds % 60);
@@ -41000,7 +40999,7 @@ var Timer = function (_React$Component) {
       var _this2 = this;
 
       this.setState(_extends({}, this.state, {
-        timeSpent: this.props.task.first_started || this.props.task.last_stopped ? 0 : this.props.task.is_playing && this.props.task.last_stopped ? new Date().getTime() - this.props.task.first_started : this.props.task.last_stopped - this.props.task.first_started
+        secondsSpent: parseInt(this.props.task.secondsSpent)
       }), function () {
         if (_this2.props.task.is_playing == 1) {
           _this2.startCounting();
@@ -41016,7 +41015,7 @@ var Timer = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: this.state.timer ? 'playing' : '' },
-          this.state.timer ? this.displayTimeLapse(this.state.timeSpent + this.state.timeLapse) : this.displayTimeLapse(this.state.timeSpent)
+          this.calculateTimeSpent(this.state.secondsSpent)
         ),
         _react2.default.createElement(
           'div',

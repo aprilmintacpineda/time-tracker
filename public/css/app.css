@@ -51,7 +51,7 @@
     padding: 10px;
     border: 1px solid #d0d1d5; }
     .task-list td:last-child {
-      width: 100px; }
+      width: 150px; }
   .task-list a {
     cursor: pointer;
     opacity: 0.6; }

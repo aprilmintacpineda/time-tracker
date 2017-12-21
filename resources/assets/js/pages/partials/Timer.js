@@ -5,35 +5,34 @@ import Icon from '../../components/Icon';
 // actions
 import { runTimer, pauseTimer } from '../../redux/tasks/actions';
 // helpers
-import { timeSpent } from '../../helpers'
+import { timeSpent } from '../../helpers';
 
 class Timer extends React.Component {
   constructor(props) {
     super(props);
     // state
     this.state = {
-      timeLapse: 0,
       timer: null,
-      timeSpent: null
+      secondsSpent: 0
     };
 
     this.handleRunTimer = this.handleRunTimer.bind(this);
     this.handlePauseTimer = this.handlePauseTimer.bind(this);
     this.stopCounting = this.stopCounting.bind(this);
     this.startCounting = this.startCounting.bind(this);
-    this.displayTimeLapse = this.displayTimeLapse.bind(this);
+    this.calculateTimeSpent = this.calculateTimeSpent.bind(this);
     this.tick = this.tick.bind(this);
   }
 
   tick() {
     this.setState({
       ...this.state,
-      timeLapse: this.state.timeLapse + 1
+      secondsSpent: this.state.secondsSpent + 1
     });
   }
 
   handlePauseTimer() {
-    this.props.pauseTimer(this.props.task, this.props.task_index, new Date().getTime());
+    this.props.pauseTimer(this.props.task, this.props.task_index, new Date().getTime(), this.state.secondsSpent);
     this.stopCounting();
   }
 
@@ -58,7 +57,7 @@ class Timer extends React.Component {
     });
   }
 
-  displayTimeLapse(seconds) {
+  calculateTimeSpent(seconds) {
     let h = Math.floor((seconds / 3600));
     let m = Math.floor((seconds / 60) % 60);
     let s = Math.floor(seconds % 60);
@@ -71,12 +70,7 @@ class Timer extends React.Component {
   componentWillMount() {
     this.setState({
       ...this.state,
-      timeSpent:
-        this.props.task.first_started || this.props.task.last_stopped
-        ? 0
-        : this.props.task.is_playing && this.props.task.last_stopped
-        ? new Date().getTime() - this.props.task.first_started
-        : this.props.task.last_stopped - this.props.task.first_started
+      secondsSpent: parseInt(this.props.task.secondsSpent)
     }, () => {
       if (this.props.task.is_playing == 1) {
         this.startCounting();
@@ -88,7 +82,7 @@ class Timer extends React.Component {
     return (
       <div className="timer">
         <div className={this.state.timer? 'playing' : ''}>
-          {this.state.timer? this.displayTimeLapse(this.state.timeSpent + this.state.timeLapse) : this.displayTimeLapse(this.state.timeSpent)}
+          {this.calculateTimeSpent(this.state.secondsSpent)}
         </div>
         <div>
           {this.props.task.is_playing == 1
