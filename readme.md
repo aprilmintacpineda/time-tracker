@@ -5,8 +5,6 @@
 
 Time Tracker is a web based app that allows you to track your time on a specific task. It has database support so you don't loose your tasks, you can also put them in a collection.
 
-**Last updated: December 2, 2017 11:00h**
-
 ## Technologies used
 
 please refer to the `package.json` and `composer.json`.
