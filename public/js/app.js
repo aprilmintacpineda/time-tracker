@@ -40943,6 +40943,8 @@ var Timer = function (_React$Component) {
 
     _this.handleRunTimer = _this.handleRunTimer.bind(_this);
     _this.handlePauseTimer = _this.handlePauseTimer.bind(_this);
+    _this.stopCounting = _this.stopCounting.bind(_this);
+    _this.startCounting = _this.startCounting.bind(_this);
     _this.displayTimeLapse = _this.displayTimeLapse.bind(_this);
     _this.tick = _this.tick.bind(_this);
     return _this;
@@ -40959,25 +40961,28 @@ var Timer = function (_React$Component) {
     key: 'handlePauseTimer',
     value: function handlePauseTimer() {
       this.props.pauseTimer(this.props.task, this.props.task_index, new Date().getTime());
+      this.stopCounting();
+    }
+  }, {
+    key: 'handleRunTimer',
+    value: function handleRunTimer() {
+      this.props.runTimer(this.props.task, this.props.task_index, new Date().getTime());
+      this.startCounting();
+    }
+  }, {
+    key: 'stopCounting',
+    value: function stopCounting() {
       clearInterval(this.state.timer);
       this.setState(_extends({}, this.state, {
         timer: null
       }));
     }
   }, {
-    key: 'handleRunTimer',
-    value: function handleRunTimer() {
-      this.props.runTimer(this.props.task, this.props.task_index, new Date().getTime());
+    key: 'startCounting',
+    value: function startCounting() {
       var timer = setInterval(this.tick, 1000);
       this.setState(_extends({}, this.state, {
         timer: timer
-      }));
-    }
-  }, {
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      this.setState(_extends({}, this.state, {
-        timeSpent: this.props.task.first_started || this.props.task.last_stopped ? 0 : this.props.task.is_playing && this.props.task.last_stopped ? new Date().getTime() - this.props.task.first_started : this.props.task.last_stopped - this.props.task.first_started
       }));
     }
   }, {
@@ -40988,6 +40993,19 @@ var Timer = function (_React$Component) {
       var s = Math.floor(seconds % 60);
 
       return (h.toString().length > 1 ? h : '0' + h) + ':' + (m.toString().length > 1 ? m : '0' + m) + ':' + (s.toString().length > 1 ? s : '0' + s);
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      this.setState(_extends({}, this.state, {
+        timeSpent: this.props.task.first_started || this.props.task.last_stopped ? 0 : this.props.task.is_playing && this.props.task.last_stopped ? new Date().getTime() - this.props.task.first_started : this.props.task.last_stopped - this.props.task.first_started
+      }), function () {
+        if (_this2.props.task.is_playing == 1) {
+          _this2.startCounting();
+        }
+      });
     }
   }, {
     key: 'render',

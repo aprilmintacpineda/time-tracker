@@ -105,3 +105,4 @@ I hope you find it useful! :-)
 
 - Twitter: [aprmintacpineda](https://twitter.com/aprmintacpineda)
 - YouTube: [channel](https://www.youtube.com/channel/UCHzdp9dHGxis-LkOMwqhSkA)
+- Donate: [Paypal](https://www.paypal.me/aprilmintacpineda)

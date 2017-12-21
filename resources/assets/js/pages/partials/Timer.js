@@ -19,6 +19,8 @@ class Timer extends React.Component {
 
     this.handleRunTimer = this.handleRunTimer.bind(this);
     this.handlePauseTimer = this.handlePauseTimer.bind(this);
+    this.stopCounting = this.stopCounting.bind(this);
+    this.startCounting = this.startCounting.bind(this);
     this.displayTimeLapse = this.displayTimeLapse.bind(this);
     this.tick = this.tick.bind(this);
   }
@@ -32,6 +34,15 @@ class Timer extends React.Component {
 
   handlePauseTimer() {
     this.props.pauseTimer(this.props.task, this.props.task_index, new Date().getTime());
+    this.stopCounting();
+  }
+
+  handleRunTimer() {
+    this.props.runTimer(this.props.task, this.props.task_index, new Date().getTime());
+    this.startCounting();
+  }
+
+  stopCounting() {
     clearInterval(this.state.timer);
     this.setState({
       ...this.state,
@@ -39,24 +50,11 @@ class Timer extends React.Component {
     });
   }
 
-  handleRunTimer() {
-    this.props.runTimer(this.props.task, this.props.task_index, new Date().getTime());
+  startCounting() {
     let timer = setInterval(this.tick, 1000);
     this.setState({
       ...this.state,
       timer
-    });
-  }
-
-  componentWillMount() {
-    this.setState({
-      ...this.state,
-      timeSpent:
-        this.props.task.first_started || this.props.task.last_stopped
-        ? 0
-        : this.props.task.is_playing && this.props.task.last_stopped
-        ? new Date().getTime() - this.props.task.first_started
-        : this.props.task.last_stopped - this.props.task.first_started
     });
   }
 
@@ -68,6 +66,22 @@ class Timer extends React.Component {
     return (h.toString().length > 1? h : '0' + h) + ':' +
       (m.toString().length > 1? m : '0' + m) + ':' +
       (s.toString().length > 1? s : '0' + s);
+  }
+
+  componentWillMount() {
+    this.setState({
+      ...this.state,
+      timeSpent:
+        this.props.task.first_started || this.props.task.last_stopped
+        ? 0
+        : this.props.task.is_playing && this.props.task.last_stopped
+        ? new Date().getTime() - this.props.task.first_started
+        : this.props.task.last_stopped - this.props.task.first_started
+    }, () => {
+      if (this.props.task.is_playing == 1) {
+        this.startCounting();
+      }
+    });
   }
 
   render() {
