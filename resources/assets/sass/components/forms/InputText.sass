@@ -1,0 +1,27 @@
+.form-input-text-wrapper
+  p:not(.error-message) small
+    margin-left: 5px
+    color: gray
+  input[type=text]
+    user-select: text !important
+    border: 1px solid #c9c9c9
+    border-radius: 4px
+    padding: 8px
+    background: #ffffff
+    display: block
+    &:focus
+      box-shadow: 0 0 5px #c9c9c9
+  input[type=text].disabled
+    opacity: 0.35
+    cursor: not-allowed
+  input[type=text].occupy-space
+    width: 100%
+  input[type=text].medium
+    width: 300px
+  input[type=text].long
+    width: 400px
+  input[type=text].with-errors
+    border: 1px solid $danger-color
+    color: $danger-color
+    &:focus
+      box-shadow: 0 0 5px $danger-color

@@ -1,3 +1,3 @@
 export const selectFetchStatus = state => ({
-	...state.tasks.fetch
+  ...state.tasks.fetch
 });

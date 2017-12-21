@@ -16,8 +16,12 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned()->primary();
             $table->string('title', 255);
-            $table->string('description', 255);
-            $table->bigInteger('collection_id')->unsigned();
+            $table->string('description', 255)->nullable();
+            $table->bigInteger('collection_id')->unsigned()->nullable();
+            $table->boolean('is_playing')->default(false);
+            $table->timestamp('first_started')->nullable();
+            $table->timestamp('last_stopped')->nullable();
+            $table->bigInteger('secondsSpent')->unsigned()->default(0);
             $table->timestamps();
 
             $table->foreign('collection_id')->references('id')->on('collections');
