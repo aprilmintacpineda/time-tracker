@@ -8,19 +8,19 @@ const history = createBrowserHistory();
 import Dashboard from './pages/Dashboard';
 
 class App extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+  }
 
-	render() {
-		return (
-			<Router history={history}>
-				<Switch>
-					<Route exact path="/" component={Dashboard} />
-				</Switch>
-			</Router>
-		);
-	}
+  render() {
+    return (
+      <Router history={history}>
+        <Switch>
+          <Route exact path="/" component={Dashboard} />
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;

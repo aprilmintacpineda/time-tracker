@@ -3,8 +3,8 @@ import { types as actionTypes } from '../../redux/create_tasks/actions';
 import worker from './worker';
 
 export default function* () {
-	while (true) {
-		yield take(actionTypes.submit);
-		yield fork(worker);
-	}
+  while (true) {
+    yield take(actionTypes.submit);
+    yield fork(worker);
+  }
 }

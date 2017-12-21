@@ -18,6 +18,8 @@ class CreateTasksTable extends Migration
             $table->string('title', 255);
             $table->string('description', 255)->nullable();
             $table->bigInteger('collection_id')->unsigned()->nullable();
+            $table->timestamp('first_started')->nullable();
+            $table->timestamp('last_stopped')->nullable();
             $table->timestamps();
 
             $table->foreign('collection_id')->references('id')->on('collections');

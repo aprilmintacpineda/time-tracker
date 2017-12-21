@@ -6,14 +6,14 @@ import worker from '../../../sagas/collections/worker';
 const watcherSaga = watcher();
 
 describe('Saga: collections/watcher', () => {
-	it('continuously watches for actionTypes.fetch action', () => {
-		expect(watcherSaga.next().value).toEqual(take(actionTypes.fetch));
-		expect(watcherSaga.next().value).toEqual(fork(worker));
+  it('continuously watches for actionTypes.fetch action', () => {
+    expect(watcherSaga.next().value).toEqual(take(actionTypes.fetch));
+    expect(watcherSaga.next().value).toEqual(fork(worker));
 
-		expect(watcherSaga.next().value).toEqual(take(actionTypes.fetch));
-		expect(watcherSaga.next().value).toEqual(fork(worker));
+    expect(watcherSaga.next().value).toEqual(take(actionTypes.fetch));
+    expect(watcherSaga.next().value).toEqual(fork(worker));
 
-		expect(watcherSaga.next().value).toEqual(take(actionTypes.fetch));
-		expect(watcherSaga.next().value).toEqual(fork(worker));
-	});
+    expect(watcherSaga.next().value).toEqual(take(actionTypes.fetch));
+    expect(watcherSaga.next().value).toEqual(fork(worker));
+  });
 });

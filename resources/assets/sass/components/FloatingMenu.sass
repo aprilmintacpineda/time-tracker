@@ -3,53 +3,53 @@ $inner-bg: #498dfc
 $inner-text-color: #ffffff
 
 .floating-menu
-	position: absolute
-	bottom: 50px
-	right: 50px
-	display: block
-	z-index: 99
-	ul
-		list-style: none
-	.outer
-		li > span
-			font-size: 40px
-			cursor: pointer
-			color: $inner-bg
-	.inner.shown
-		bottom: calc(100% + 10px)
-		opacity: 1
-		visibility: visible
-	.inner.hidden
-		bottom: 200%
-		opacity: 0
-		visibility: hidden
-	.inner
-		border: $border
-		background: $inner-bg
-		transition: all 500ms
-		display: block
-		position: absolute
-		color: $inner-text-color
-		bottom: calc(100% + 10px)
-		right: 0
-		width: 200px
-		a.disabled
-			cursor: not-allowed
-			color: gray
-		a:not(.disabled)
-			cursor: pointer
-			opacity: 0.7
-			&:hover
-				opacity: 1
-		a
-			display: block
-			padding: 5px
-		&:after
-			display: block
-			position: absolute
-			bottom: -10px
-			right: 5px
-			content: ''
-			border-right: 10px solid transparent
-			border-left: 10px solid transparent
-			border-top: 10px solid $inner-bg
+  position: absolute
+  bottom: 50px
+  right: 50px
+  display: block
+  z-index: 99
+  ul
+    list-style: none
+  .outer
+    li > span
+      font-size: 40px
+      cursor: pointer
+      color: $inner-bg
+  .inner.shown
+    bottom: calc(100% + 10px)
+    opacity: 1
+    visibility: visible
+  .inner.hidden
+    bottom: 200%
+    opacity: 0
+    visibility: hidden
+  .inner
+    border: $border
+    background: $inner-bg
+    transition: all 500ms
+    display: block
+    position: absolute
+    color: $inner-text-color
+    bottom: calc(100% + 10px)
+    right: 0
+    width: 200px
+    a.disabled
+      cursor: not-allowed
+      color: gray
+    a:not(.disabled)
+      cursor: pointer
+      opacity: 0.7
+      &:hover
+        opacity: 1
+    a
+      display: block
+      padding: 5px
+    &:after
+      display: block
+      position: absolute
+      bottom: -10px
+      right: 5px
+      content: ''
+      border-right: 10px solid transparent
+      border-left: 10px solid transparent
+      border-top: 10px solid $inner-bg

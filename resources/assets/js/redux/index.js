@@ -6,7 +6,7 @@ import tasks from './tasks/reducer';
 import create_tasks from './create_tasks/reducer';
 
 export default combineReducers({
-	collections,
-	tasks,
-	create_tasks
+  collections,
+  tasks,
+  create_tasks
 });
