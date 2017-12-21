@@ -99,7 +99,7 @@ I hope you find it useful! :-)
 ## Feedback
 
 - For a more private discussion, message me on my [linkedin account](https://linkedin.com/in/aprilmintacpineda).
-- For bugs, issues, questions, or feature requests feel free to open an issue on this repo.
+- For bug reports, glitches, questions, feature requests, etc., feel free to open an issue on this repo.
 
 ## Other links
 
