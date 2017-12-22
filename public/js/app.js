@@ -41274,6 +41274,8 @@ var _Icon2 = _interopRequireDefault(_Icon);
 
 var _actions = __webpack_require__(42);
 
+var _actions2 = __webpack_require__(122);
+
 var _helpers = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -41362,8 +41364,19 @@ var Timer = function (_React$Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
+      var lastTimeSpent = 0;
+
+      if (!this.props.task.last_stopped && this.props.task.first_started) {
+        lastTimeSpent = (new Date().getTime() - this.props.task.first_started) / 1000;
+        (0, _helpers.delay)(1, function () {
+          return _this2.props.push('Timer for `' + _this2.props.task.title + '` is running.');
+        });
+      }
+
+      var secondsSpent = this.props.task.secondsSpent ? parseInt(this.props.task.secondsSpent) + lastTimeSpent : lastTimeSpent;
+
       this.setState(_extends({}, this.state, {
-        secondsSpent: this.props.task.secondsSpent ? parseInt(this.props.task.secondsSpent) : 0
+        secondsSpent: secondsSpent
       }), function () {
         if (_this2.props.task.is_playing == 1) {
           _this2.startCounting();
@@ -41403,7 +41416,8 @@ var Timer = function (_React$Component) {
 
 exports.default = (0, _reactRedux.connect)(null, {
   runTimer: _actions.runTimer,
-  pauseTimer: _actions.pauseTimer
+  pauseTimer: _actions.pauseTimer,
+  push: _actions2.push
 })(Timer);
 
 /***/ })
