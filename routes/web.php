@@ -11,6 +11,9 @@ Route::get('tasks/view/{id}', 'TaskController@view');
 Route::post('tasks/create', 'TaskController@create');
 Route::patch('tasks/edit/{id}', 'TaskController@edit');
 Route::delete('tasks/delete/{id}', 'TaskController@delete');
+// running / stopping timer
+Route::post('timer/run', 'TimerController@run');
+Route::post('timer/stop', 'TimerController@stop');
 // landing routes
 Route::get('/', 'LandingController@index');
 Route::get('{slug}', 'LandingController@index')
