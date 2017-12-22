@@ -1,15 +1,16 @@
 .notifications-list
-	position: fixed
+	position: absolute
 	bottom: 20px
 	left: 20px
-	width: 250px
-	height: auto
+	max-width: 300px
 	.notification
 		animation: notification-e $animationSpeed
 		position: relative
+		display: block
 		background: #006699
 		padding: 10px
 		color: #ffffff
+		z-index: 99
 		+flexibleMarginBottom(10px)
 		a
 			margin-top: 5px

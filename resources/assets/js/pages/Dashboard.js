@@ -53,12 +53,7 @@ class Dashboard extends React.Component {
                     <th colSpan={2}>Time</th>
                   </tr>
                   {this.props.tasks.data.map((task, i) =>
-                    <tr className={(i % 2? 'task odd' : 'task even')} key={i}>
-                      <td>{task.title}</td>
-                      <td>{task.description? task.description : '------- none provided -------'}</td>
-                      <td>{new Date(task.created_at).toLocaleString()}</td>
-                      <td><Timer task={task} task_index={i} /></td>
-                    </tr>
+                    <Timer key={i} task={task} task_index={i} />
                   )}
               </tbody>
               </table>
