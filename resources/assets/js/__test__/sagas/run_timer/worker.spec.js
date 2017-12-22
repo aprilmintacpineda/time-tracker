@@ -32,7 +32,7 @@ describe('Saga: run_timer/worker', () => {
 		};
 		let workerSaga = worker(action);
 
-		expect(workerSaga.next().value).toEqual(call(axios.post, {
+		expect(workerSaga.next().value).toEqual(call(axios.post, 'timer/run', {
 			id: action.task.id,
 			timestamp: action.timestamp
 		}));
@@ -50,7 +50,7 @@ describe('Saga: run_timer/worker', () => {
 		};
 		let workerSaga = worker(action);
 
-		expect(workerSaga.next().value).toEqual(call(axios.post, {
+		expect(workerSaga.next().value).toEqual(call(axios.post, 'timer/run', {
 			id: action.task.id,
 			timestamp: action.timestamp
 		}));
@@ -71,7 +71,7 @@ describe('Saga: run_timer/worker', () => {
 		};
 		let workerSaga = worker(action);
 
-		expect(workerSaga.next().value).toEqual(call(axios.post, {
+		expect(workerSaga.next().value).toEqual(call(axios.post, 'timer/run', {
 			id: action.task.id,
 			timestamp: action.timestamp
 		}));

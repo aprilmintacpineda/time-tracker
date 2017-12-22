@@ -12,7 +12,7 @@ import { delay } from '../../helpers';
 export default function* (action) {
 	if (action.task.failedToRun || !action.task.is_playing || action.task.is_playing == 0) {
 		try {
-			yield call(axios.post, {
+			yield call(axios.post, 'timer/run', {
 				id: action.task.id,
 				timestamp: action.timestamp
 			});

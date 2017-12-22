@@ -14,6 +14,6 @@ describe('Reducer: notifications', () => {
 	});
 
 	it('handles actions.clear', () => {
-		expect(reducer(['Example notification'], clear('Example notification'))).toEqual([]);
+		expect(reducer(['Example notification'], clear(0))).toEqual([]);
 	});
 });
