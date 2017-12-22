@@ -75,6 +75,10 @@ php artisan migrate
 
 #### Step 4
 
+Open `.env` file and update the `APP_TIMEZONE` to whatever timezone you are in. By default, it's set to `Asia/Manila`. I recommend using https://timezonedb.com/time-zones to search for the timezone that's right for you.
+
+#### Step 5
+
 Use it.
 
 Don't do this if:
