@@ -39,17 +39,17 @@ export default (state = initial_state, action) => {
         ].reverse().concat(state.data)
       };
 
-  case actionTypes.runTimer:
-    return {
-      ...state,
-      data: state.data.map((data, i) => i == action.task_index
-      ? {
-          ...data,
-          first_started: !data.first_started? action.timestamp : data.first_started,
-          is_playing: true
-        }
-      : { ...data })
-    };
+    case actionTypes.runTimer:
+      return {
+        ...state,
+        data: state.data.map((data, i) => i == action.task_index
+        ? {
+            ...data,
+            first_started: !data.first_started? action.timestamp : data.first_started,
+            is_playing: true
+          }
+        : { ...data })
+      };
 
     case actionTypes.pauseTimer:
       return {

@@ -81,8 +81,6 @@ class Timer extends React.Component {
   }
 
   render() {
-    console.log(this.props.task);
-
     return (
       <div className="timer">
         <div className={this.state.timer? 'playing' : ''}>
