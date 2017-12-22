@@ -60,6 +60,45 @@
   .task-list .playing {
     color: blue; }
 
+.notifications-list {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 250px;
+  height: auto; }
+  .notifications-list .notification {
+    -webkit-animation: notification-e 300ms;
+            animation: notification-e 300ms;
+    position: relative;
+    background: #006699;
+    padding: 10px;
+    color: #ffffff;
+    margin-bottom: 10px; }
+    .notifications-list .notification:last-child {
+      margin-bottom: 0; }
+    .notifications-list .notification a {
+      margin-top: 5px;
+      display: inline-block;
+      opacity: 0.7;
+      text-decoration: underline;
+      -webkit-text-decoration-style: dashed;
+              text-decoration-style: dashed;
+      cursor: pointer; }
+      .notifications-list .notification a:hover {
+        opacity: 1; }
+
+@-webkit-keyframes notification-e {
+  0% {
+    left: -100%; }
+  100% {
+    left: 0; } }
+
+@keyframes notification-e {
+  0% {
+    left: -100%; }
+  100% {
+    left: 0; } }
+
 .new-task-fields-wrapper:after {
   content: '';
   display: block;

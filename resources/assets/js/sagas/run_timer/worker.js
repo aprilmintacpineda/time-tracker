@@ -21,7 +21,7 @@ export default function* (action) {
 		} catch (e) {
 			yield put(runTimerFailed(action.task_index));
 			yield put(push('Timer for `' + action.task.title + '` failed to run in the backend. Will try again after 5 seconds. Please feel free to work.'));
-			yield delay(5000);
+			yield delay(5);
 			yield put(runTimer(action.task, action.task_index, action.timestamp));
 		}
 	}

@@ -7,9 +7,9 @@ export default (state = initial_state, action) => {
 			return state.concat(action.message);
 
 		case actionTypes.clear:
-			return state.filter(i => i != action.notification_index);
+			return state.filter((notification, i) => i != action.notification_index);
 
 		default:
-			return [ ...state ];
+			return [...state];
 	}
 };

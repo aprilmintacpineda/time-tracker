@@ -1,0 +1,27 @@
+.notifications-list
+	position: fixed
+	bottom: 20px
+	left: 20px
+	width: 250px
+	height: auto
+	.notification
+		animation: notification-e $animationSpeed
+		position: relative
+		background: #006699
+		padding: 10px
+		color: #ffffff
+		+flexibleMarginBottom(10px)
+		a
+			margin-top: 5px
+			display: inline-block
+			opacity: 0.7
+			text-decoration: underline
+			text-decoration-style: dashed
+			cursor: pointer
+			&:hover
+				opacity: 1
+@keyframes notification-e
+	0%
+		left: -100%
+	100%
+		left: 0
