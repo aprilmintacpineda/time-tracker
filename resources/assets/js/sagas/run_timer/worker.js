@@ -6,6 +6,7 @@ import {
 	runTimerFailed,
 	runTimerSuccessful
 } from '../../redux/tasks/actions';
+import { push } from '../../redux/notifications/actions';
 import { delay } from '../../helpers';
 
 export default function* (action) {
@@ -16,9 +17,10 @@ export default function* (action) {
 				timestamp: action.timestamp
 			});
 			yield put(runTimerSuccessful(action.task_index));
+			yield put(push('Timer for `' + action.task.title + '` was successfully run in the backend.'));
 		} catch (e) {
-			// TODO: push notifications
 			yield put(runTimerFailed(action.task_index));
+			yield put(push('Timer for `' + action.task.title + '` failed to run in the backend. Will try again after 5 seconds. Please feel free to work.'));
 			yield delay(5000);
 			yield put(runTimer(action.task, action.task_index, action.timestamp));
 		}

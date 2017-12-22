@@ -36952,6 +36952,8 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var _actions = __webpack_require__(53);
 
+var _actions2 = __webpack_require__(520);
+
 var _helpers = __webpack_require__(54);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -36964,7 +36966,7 @@ function _callee(action) {
 			switch (_context.prev = _context.next) {
 				case 0:
 					if (!(action.task.failedToRun || !action.task.is_playing || action.task.is_playing == 0)) {
-						_context.next = 16;
+						_context.next = 20;
 						break;
 					}
 
@@ -36980,29 +36982,37 @@ function _callee(action) {
 					return (0, _effects.put)((0, _actions.runTimerSuccessful)(action.task_index));
 
 				case 6:
-					_context.next = 16;
-					break;
+					_context.next = 8;
+					return (0, _effects.put)((0, _actions2.push)('Timer for `' + action.task.title + '` was successfully run in the backend.'));
 
 				case 8:
-					_context.prev = 8;
-					_context.t0 = _context['catch'](1);
-					_context.next = 12;
-					return (0, _effects.put)((0, _actions.runTimerFailed)(action.task_index));
+					_context.next = 20;
+					break;
 
-				case 12:
+				case 10:
+					_context.prev = 10;
+					_context.t0 = _context['catch'](1);
 					_context.next = 14;
-					return (0, _helpers.delay)(5000);
+					return (0, _effects.put)((0, _actions.runTimerFailed)(action.task_index));
 
 				case 14:
 					_context.next = 16;
-					return (0, _effects.put)((0, _actions.runTimer)(action.task, action.task_index, action.timestamp));
+					return (0, _effects.put)((0, _actions2.push)('Timer for `' + action.task.title + '` failed to run in the backend. Will try again after 5 seconds. Please feel free to work.'));
 
 				case 16:
+					_context.next = 18;
+					return (0, _helpers.delay)(5000);
+
+				case 18:
+					_context.next = 20;
+					return (0, _effects.put)((0, _actions.runTimer)(action.task, action.task_index, action.timestamp));
+
+				case 20:
 				case 'end':
 					return _context.stop();
 			}
 		}
-	}, _marked, this, [[1, 8]]);
+	}, _marked, this, [[1, 10]]);
 }
 
 /***/ }),
@@ -41186,6 +41196,35 @@ exports.default = (0, _reactRedux.connect)(null, {
   runTimer: _actions.runTimer,
   pauseTimer: _actions.pauseTimer
 })(Timer);
+
+/***/ }),
+/* 520 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var types = exports.types = {
+	push: 'NOTIFICATIONS_PUSH',
+	clear: 'NOTIFICATIONS_CLEAR'
+};
+
+var push = exports.push = function push(message) {
+	return {
+		type: types.push,
+		message: message
+	};
+};
+
+var clear = exports.clear = function clear(notification_index) {
+	return {
+		type: types.clear,
+		notification_index: notification_index
+	};
+};
 
 /***/ })
 /******/ ]);
