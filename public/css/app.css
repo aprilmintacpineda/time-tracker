@@ -38,7 +38,6 @@
 .task-list {
   margin: 10px;
   width: calc(100% - 20px);
-  border: 1px solid #d0d1d5;
   background: #ffffff; }
   .task-list tr.odd {
     background: #d4d5d6; }
@@ -48,8 +47,7 @@
     color: #ffffff;
     font-weight: normal; }
   .task-list td {
-    padding: 10px;
-    border: 1px solid #d0d1d5; }
+    padding: 10px; }
     .task-list td:last-child {
       width: 150px; }
   .task-list a {

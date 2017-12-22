@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Icon from '../../components/Icon';
 // actions
 import { runTimer, pauseTimer } from '../../redux/tasks/actions';
-import { push } from '../../redux/notifications/actions';
+import { create } from '../../redux/notifications/actions';
 // helpers
 import { timeSpent, delay } from '../../helpers';
 
@@ -14,7 +14,8 @@ class Timer extends React.Component {
     // state
     this.state = {
       timer: null,
-      secondsSpent: 0
+      secondsSpent: 0,
+      shownStartupRunningNotification: false
     };
 
     this.handleRunTimer = this.handleRunTimer.bind(this);
@@ -74,7 +75,14 @@ class Timer extends React.Component {
 
     if ((!task.last_stopped || task.last_stopped == 0) && task.first_started) {
       lastTimeSpent = (new Date().getTime() - task.first_started) / 1000;
-      delay(1, () => this.props.push('Timer for `'+ task.title +'` is running.'));
+      if (!this.state.shownStartupRunningNotification) {
+        delay(1, () => {
+          this.setState({
+            ...this.state,
+            shownStartupRunningNotification: true
+          }, () => this.props.create('Timer for `'+ task.title +'` is running.'));
+        });
+      }
     }
 
     let secondsSpent = task.secondsSpent
@@ -132,5 +140,5 @@ class Timer extends React.Component {
 export default connect(null, {
   runTimer,
   pauseTimer,
-  push
+  create
 })(Timer);

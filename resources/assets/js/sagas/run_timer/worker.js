@@ -6,8 +6,8 @@ import {
 	runTimerFailed,
 	runTimerSuccessful
 } from '../../redux/tasks/actions';
-import { push } from '../../redux/notifications/actions';
-import { delay } from '../../helpers';
+import { create } from '../../redux/notifications/actions';
+import { delay, random } from '../../helpers';
 
 export default function* (action) {
 	if (action.task.failedToRun || !action.task.is_playing || action.task.is_playing == 0) {
@@ -17,10 +17,12 @@ export default function* (action) {
 				timestamp: action.timestamp
 			});
 			yield put(runTimerSuccessful(action.task_index));
-			yield put(push('Timer for `' + action.task.title + '` was successfully run in the backend.'));
+			const id = yield call(random);
+			yield put(create('Timer for `' + action.task.title + '` was successfully run in the backend.'));
 		} catch (e) {
 			yield put(runTimerFailed(action.task_index));
-			yield put(push('Timer for `' + action.task.title + '` failed to run in the backend. Will try again after 5 seconds. Please feel free to work.'));
+			const id = yield call(random);
+			yield put(create('Timer for `' + action.task.title + '` failed to run in the backend. Will try again after 5 seconds. Please feel free to work.'));
 			yield delay(5);
 			yield put(runTimer(action.task, action.task_index, action.timestamp));
 		}
