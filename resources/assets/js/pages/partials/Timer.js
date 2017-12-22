@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Icon from '../../components/Icon';
 // actions
 import { runTimer, pauseTimer } from '../../redux/tasks/actions';
-import { push } from '../../redux/notifications/actions';
+import { create } from '../../redux/notifications/actions';
 // helpers
 import { timeSpent, delay } from '../../helpers';
 
@@ -14,13 +14,15 @@ class Timer extends React.Component {
     // state
     this.state = {
       timer: null,
-      secondsSpent: 0
+      secondsSpent: 0,
+      shownStartupRunningNotification: false
     };
 
     this.handleRunTimer = this.handleRunTimer.bind(this);
     this.handlePauseTimer = this.handlePauseTimer.bind(this);
     this.stopCounting = this.stopCounting.bind(this);
     this.startCounting = this.startCounting.bind(this);
+    this.renderTimeSpent = this.renderTimeSpent.bind(this);
     this.calculateTimeSpent = this.calculateTimeSpent.bind(this);
     this.tick = this.tick.bind(this);
   }
@@ -42,12 +44,12 @@ class Timer extends React.Component {
     this.startCounting();
   }
 
-  stopCounting() {
+  stopCounting(callback = null) {
     clearInterval(this.state.timer);
     this.setState({
       ...this.state,
       timer: null
-    });
+    }, callback);
   }
 
   startCounting() {
@@ -58,7 +60,7 @@ class Timer extends React.Component {
     });
   }
 
-  calculateTimeSpent(seconds) {
+  renderTimeSpent(seconds) {
     let h = Math.floor((seconds / 3600));
     let m = Math.floor((seconds / 60) % 60);
     let s = Math.floor(seconds % 60);
@@ -68,41 +70,69 @@ class Timer extends React.Component {
       (s.toString().length > 1? s : '0' + s);
   }
 
-  componentWillMount() {
+  calculateTimeSpent(task) {
     let lastTimeSpent = 0;
 
-    if (!this.props.task.last_stopped && this.props.task.first_started) {
-      lastTimeSpent = (new Date().getTime() - this.props.task.first_started) / 1000;
-      delay(1, () => this.props.push('Timer for `'+ this.props.task.title +'` is running.'));
+    if ((!task.last_stopped || task.last_stopped == 0) && task.first_started) {
+      lastTimeSpent = (new Date().getTime() - task.first_started) / 1000;
+      if (!this.state.shownStartupRunningNotification) {
+        delay(1, () => {
+          this.setState({
+            ...this.state,
+            shownStartupRunningNotification: true
+          }, () => this.props.create('Timer for `'+ task.title +'` is running.'));
+        });
+      }
     }
 
-    let secondsSpent = this.props.task.secondsSpent
-      ? parseInt(this.props.task.secondsSpent) + lastTimeSpent
+    let secondsSpent = task.secondsSpent
+      ? parseInt(task.secondsSpent) + lastTimeSpent
       : lastTimeSpent;
 
     this.setState({
       ...this.state,
       secondsSpent
     }, () => {
-      if (this.props.task.is_playing == 1) {
+      if (task.is_playing == 1) {
         this.startCounting();
       }
     });
   }
 
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.task.id != nextProps.task.id) {
+      this.stopCounting(() => this.calculateTimeSpent(nextProps.task));
+    }
+  }
+
+  componentDidMount() {
+    this.calculateTimeSpent(this.props.task);
+  }
+
   render() {
     return (
-      <div className="timer">
-        <div className={this.state.timer? 'playing' : ''}>
-          {this.calculateTimeSpent(this.state.secondsSpent)}
-        </div>
-        <div>
-          {this.props.task.is_playing == 1
-            ? <a onClick={this.handlePauseTimer}><Icon icon="player-pause" text="Pause" /></a>
-            : <a onClick={this.handleRunTimer}><Icon icon="player-play" text="Run" /></a>
-          }
-        </div>
-      </div>
+      <tr className={(this.props.task_index % 2? 'task odd' : 'task even')}>
+        <td>{this.props.task.title}</td>
+        <td>{this.props.task.description? this.props.task.description : '------- none provided -------'}</td>
+        <td>{new Date(this.props.task.created_at).toLocaleString()}</td>
+        <td>
+          <div className="timer">
+            <div className={this.state.timer? 'playing' : ''}>
+              {this.renderTimeSpent(this.state.secondsSpent)}
+            </div>
+            <div>
+              {this.props.task.is_playing == 1
+                ? <a onClick={this.handlePauseTimer}><Icon icon="player-pause" text="Pause" /></a>
+                : <a onClick={this.handleRunTimer}><Icon icon="player-play" text="Run" /></a>
+              }
+            </div>
+          </div>
+        </td>
+      </tr>
     );
   }
 }
@@ -110,5 +140,5 @@ class Timer extends React.Component {
 export default connect(null, {
   runTimer,
   pauseTimer,
-  push
+  create
 })(Timer);

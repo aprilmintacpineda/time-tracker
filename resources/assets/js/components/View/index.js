@@ -26,13 +26,7 @@ class View extends React.Component {
           ]}
         />
         <Sidebar />
-        <div className="notifications-list">
-          {
-            this.props.notifications.map((notification, i) =>
-              <Notification key={i} message={notification} index={i} />
-            )
-          }
-        </div>
+        <Notification />
         <div className="content-body">{this.props.children}</div>
       </div>
     );

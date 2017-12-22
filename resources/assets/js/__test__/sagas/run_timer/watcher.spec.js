@@ -7,9 +7,9 @@ const watcherSaga = watcher();
 
 describe('Saga: run_timer/watcher', () => {
   it('continuously watches for actionTypes.runTimer action', () => {
-  	let action = {
-    	type: actionTypes.runTimer,
-    	task: {}
+    let action = {
+      type: actionTypes.runTimer,
+      task: {}
     };
 
     expect(watcherSaga.next().value).toEqual(take(actionTypes.runTimer));

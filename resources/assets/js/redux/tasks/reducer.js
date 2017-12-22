@@ -34,9 +34,8 @@ export default (state = initial_state, action) => {
     case actionTypes.prepend:
       return {
         ...state,
-        data: [
-          ...action.data
-        ].reverse().concat(state.data)
+        data: [...state.data, ...action.data]
+          .sort((a, b) => a.created_at < b.created_at)
       };
 
     case actionTypes.runTimer:
