@@ -35044,7 +35044,7 @@ exports.default = function () {
     case _actions.types.prepend:
       return _extends({}, state, {
         data: [].concat(_toConsumableArray(state.data), _toConsumableArray(action.data)).sort(function (a, b) {
-          return a.created_at < b.created_at;
+          return a.created_at < b.created_at && a.title < b.title;
         })
       });
 
@@ -41685,15 +41685,6 @@ var Timer = function (_React$Component) {
 
       if ((!task.last_stopped || task.last_stopped == 0) && task.first_started) {
         lastTimeSpent = Math.ceil((new Date().getTime() - task.first_started) / 1000);
-        if (!this.state.shownStartupRunningNotification) {
-          (0, _helpers.delay)(1, function () {
-            _this2.setState(_extends({}, _this2.state, {
-              shownStartupRunningNotification: true
-            }), function () {
-              return _this2.props.create('Timer for `' + task.title + '` is running.');
-            });
-          });
-        }
       }
 
       var secondsSpent = task.seconds_spent ? parseInt(task.seconds_spent) + lastTimeSpent : lastTimeSpent;
@@ -41703,6 +41694,15 @@ var Timer = function (_React$Component) {
       }), function () {
         if (task.is_playing == 1) {
           _this2.startCounting();
+          if (!_this2.state.shownStartupRunningNotification) {
+            (0, _helpers.delay)(1, function () {
+              _this2.setState(_extends({}, _this2.state, {
+                shownStartupRunningNotification: true
+              }), function () {
+                return _this2.props.create('Timer for `' + task.title + '` is running.');
+              });
+            });
+          }
         }
       });
     }

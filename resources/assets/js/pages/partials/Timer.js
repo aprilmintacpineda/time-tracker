@@ -75,14 +75,6 @@ class Timer extends React.Component {
 
     if ((!task.last_stopped || task.last_stopped == 0) && task.first_started) {
       lastTimeSpent = Math.ceil((new Date().getTime() - task.first_started) / 1000);
-      if (!this.state.shownStartupRunningNotification) {
-        delay(1, () => {
-          this.setState({
-            ...this.state,
-            shownStartupRunningNotification: true
-          }, () => this.props.create('Timer for `'+ task.title +'` is running.'));
-        });
-      }
     }
 
     let secondsSpent = task.seconds_spent
@@ -95,6 +87,14 @@ class Timer extends React.Component {
     }, () => {
       if (task.is_playing == 1) {
         this.startCounting();
+        if (!this.state.shownStartupRunningNotification) {
+          delay(1, () => {
+            this.setState({
+              ...this.state,
+              shownStartupRunningNotification: true
+            }, () => this.props.create('Timer for `'+ task.title +'` is running.'));
+          });
+        }
       }
     });
   }
