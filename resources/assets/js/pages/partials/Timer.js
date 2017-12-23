@@ -74,7 +74,7 @@ class Timer extends React.Component {
     let lastTimeSpent = 0;
 
     if ((!task.last_stopped || task.last_stopped == 0) && task.first_started) {
-      lastTimeSpent = (new Date().getTime() - task.first_started) / 1000;
+      lastTimeSpent = Math.ceil((new Date().getTime() - task.first_started) / 1000);
       if (!this.state.shownStartupRunningNotification) {
         delay(1, () => {
           this.setState({
@@ -85,8 +85,8 @@ class Timer extends React.Component {
       }
     }
 
-    let secondsSpent = task.secondsSpent
-      ? parseInt(task.secondsSpent) + lastTimeSpent
+    let secondsSpent = task.seconds_spent
+      ? parseInt(task.seconds_spent) + lastTimeSpent
       : lastTimeSpent;
 
     this.setState({

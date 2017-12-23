@@ -6,7 +6,9 @@ export const types = {
   runTimer: 'TASKS_RUN_TIMER',
   pauseTimer: 'TASKS_PAUSE_TIMER',
   runTimerFailed: 'TASKS_TIMER_RUN_FAILED',
-  runTimerSuccessful: 'TASKS_TIMER_RUN_SUCCESSFUL'
+  runTimerSuccessful: 'TASKS_TIMER_RUN_SUCCESSFUL',
+  pauseTimerFailed: 'TASKS_TIMER_PAUSE_FAILED',
+  pauseTimerSuccessful: 'TASKS_TIMER_PAUSE_SUCCESSFUL'
 };
 
 export const fetch = () => ({
@@ -49,5 +51,15 @@ export const runTimerFailed = task_index => ({
 
 export const runTimerSuccessful = task_index => ({
   type: types.runTimerSuccessful,
+  task_index
+});
+
+export const pauseTimerFailed = task_index => ({
+  type: types.pauseTimerFailed,
+  task_index
+});
+
+export const pauseTimerSuccessful = task_index => ({
+  type: types.pauseTimerSuccessful,
   task_index
 });

@@ -3,7 +3,8 @@ import { all } from 'redux-saga/effects';
 import collections from './collections';
 import tasks from './tasks';
 import create_tasks from './create_tasks';
-import run_timer from './run_timer';
+import timer_run from './timer_run';
+import timer_pause from './timer_pause';
 import notifications from './notifications';
 
 export default function* () {
@@ -11,7 +12,8 @@ export default function* () {
     collections(),
     tasks(),
     create_tasks(),
-    run_timer(),
+    timer_run(),
+    timer_pause(),
     notifications()
   ]);
 }

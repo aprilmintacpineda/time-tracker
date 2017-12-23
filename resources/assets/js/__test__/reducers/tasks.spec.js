@@ -1,4 +1,10 @@
-import { types as actionTypes } from '../../redux/tasks/actions';
+import {
+  types as actionTypes,
+  runTimerFailed,
+  runTimerSuccessful,
+  pauseTimerFailed,
+  pauseTimerSuccessful
+} from '../../redux/tasks/actions';
 import initial_state from '../../redux/tasks/initial_state';
 import reducer from '../../redux/tasks/reducer';
 import settings from '../../settings';
@@ -130,5 +136,103 @@ describe('Reducers: tasks', () => {
         is_playing: false
       }]
     });
+  });
+
+  it('handles runTimerFailed', () => {
+    let state = {
+      ...initial_state,
+      data: [
+        {
+          id: 1,
+          title: 'test',
+          is_playing: false
+        }
+      ]
+    };
+
+    expect(reducer(state, runTimerFailed(0)))
+      .toEqual({
+        ...state,
+        data: [
+          {
+            ...state.data[0],
+            failedToRun: true
+          }
+        ]
+      });
+  });
+
+  it('handles runTimerSuccessful', () => {
+    let state = {
+      ...initial_state,
+      data: [
+        {
+          id: 1,
+          title: 'test',
+          is_playing: false,
+          failedToRun: true
+        }
+      ]
+    };
+
+    expect(reducer(state, runTimerSuccessful(0)))
+      .toEqual({
+        ...state,
+        data: [
+          {
+            ...state.data[0],
+            failedToRun: false
+          }
+        ]
+      });
+  });
+
+  it('handles pauseTimerFailed', () => {
+    let state = {
+      ...initial_state,
+      data: [
+        {
+          id: 1,
+          title: 'test',
+          is_playing: false
+        }
+      ]
+    };
+
+    expect(reducer(state, pauseTimerFailed(0)))
+      .toEqual({
+        ...state,
+        data: [
+          {
+            ...state.data[0],
+            failedToPause: true
+          }
+        ]
+      });
+  });
+
+  it('handles pauseTimerSuccessful', () => {
+    let state = {
+      ...initial_state,
+      data: [
+        {
+          id: 1,
+          title: 'test',
+          is_playing: false,
+          failedToPause: true
+        }
+      ]
+    };
+
+    expect(reducer(state, pauseTimerSuccessful(0)))
+      .toEqual({
+        ...state,
+        data: [
+          {
+            ...state.data[0],
+            failedToPause: false
+          }
+        ]
+      });
   });
 });

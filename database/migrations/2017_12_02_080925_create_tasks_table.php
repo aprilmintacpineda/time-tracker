@@ -21,7 +21,7 @@ class CreateTasksTable extends Migration
             $table->boolean('is_playing')->default(false);
             $table->timestamp('first_started')->nullable();
             $table->timestamp('last_stopped')->nullable();
-            $table->bigInteger('secondsSpent')->unsigned()->default(0);
+            $table->bigInteger('seconds_spent')->unsigned()->default(0);
             $table->timestamps();
 
             $table->foreign('collection_id')->references('id')->on('collections');

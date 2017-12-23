@@ -71,8 +71,7 @@ module.exports = [
       ]
     },
     plugins: [
-      new ExtractTextWebpackPlugin('app.css'),
-
+      new ExtractTextWebpackPlugin('app.css')
     ].concat(uglifyCssPlugin)
   }
 ];

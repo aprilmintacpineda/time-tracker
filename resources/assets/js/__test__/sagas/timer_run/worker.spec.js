@@ -1,11 +1,11 @@
 import { call, put } from 'redux-saga/effects';
 import axios from 'axios';
-import worker from '../../../sagas/run_timer/worker';
+import worker from '../../../sagas/timer_run/worker';
 import { runTimerSuccessful, runTimerFailed, runTimer } from '../../../redux/tasks/actions';
 import { create } from '../../../redux/notifications/actions';
-import { delay, random } from '../../../helpers';
+import { delay } from '../../../helpers';
 
-describe('Saga: run_timer/worker', () => {
+describe('Saga: timer_run/worker', () => {
   it('does not do anything if the task is already playing', () => {
     let workerSaga = worker({
       task: {
@@ -55,8 +55,7 @@ describe('Saga: run_timer/worker', () => {
       timestamp: action.timestamp
     }));
     expect(workerSaga.next().value).toEqual(put(runTimerSuccessful(action.task_index)));
-    expect(workerSaga.next().value).toEqual(call(random));
-    expect(workerSaga.next(1).value).toEqual(put(create('Timer for `' + action.task.title + '` was successfully run in the backend.')));
+    expect(workerSaga.next().value).toEqual(put(create('Timer for `' + action.task.title + '` was successfully run in the backend.')));
     expect(workerSaga.next().value).toEqual(undefined);
   });
 
@@ -77,8 +76,7 @@ describe('Saga: run_timer/worker', () => {
       timestamp: action.timestamp
     }));
     expect(workerSaga.throw().value).toEqual(put(runTimerFailed(action.task_index)));
-    expect(workerSaga.next().value).toEqual(call(random));
-    expect(workerSaga.next(1).value).toEqual(put(create('Timer for `' + action.task.title + '` failed to run in the backend. Will try again after 5 seconds. Please feel free to work.')));
+    expect(workerSaga.next().value).toEqual(put(create('Timer for `' + action.task.title + '` failed to run in the backend. Will try again after 5 seconds. Please feel free to work.')));
     expect(workerSaga.next().value).toEqual(delay(5000));
     expect(workerSaga.next().value).toEqual(put(runTimer(action.task, action.task_index, action.timestamp)));
     expect(workerSaga.next().value).toEqual(undefined);

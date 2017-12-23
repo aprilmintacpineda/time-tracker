@@ -1,11 +1,11 @@
 import { take, fork } from 'redux-saga/effects';
 import { types as actionTypes } from '../../../redux/tasks/actions';
-import watcher from '../../../sagas/run_timer';
-import worker from '../../../sagas/run_timer/worker';
+import watcher from '../../../sagas/timer_run';
+import worker from '../../../sagas/timer_run/worker';
 
 const watcherSaga = watcher();
 
-describe('Saga: run_timer/watcher', () => {
+describe('Saga: timer_run/watcher', () => {
   it('continuously watches for actionTypes.runTimer action', () => {
     let action = {
       type: actionTypes.runTimer,

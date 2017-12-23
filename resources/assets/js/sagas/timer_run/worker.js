@@ -1,7 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import axios from 'axios';
 import {
-	types as actionTypes,
 	runTimer,
 	runTimerFailed,
 	runTimerSuccessful
@@ -17,11 +16,9 @@ export default function* (action) {
 				timestamp: action.timestamp
 			});
 			yield put(runTimerSuccessful(action.task_index));
-			const id = yield call(random);
 			yield put(create('Timer for `' + action.task.title + '` was successfully run in the backend.'));
 		} catch (e) {
 			yield put(runTimerFailed(action.task_index));
-			const id = yield call(random);
 			yield put(create('Timer for `' + action.task.title + '` failed to run in the backend. Will try again after 5 seconds. Please feel free to work.'));
 			yield delay(5);
 			yield put(runTimer(action.task, action.task_index, action.timestamp));

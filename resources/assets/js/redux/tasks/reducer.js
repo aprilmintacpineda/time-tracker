@@ -35,7 +35,7 @@ export default (state = initial_state, action) => {
       return {
         ...state,
         data: [...state.data, ...action.data]
-          .sort((a, b) => a.created_at < b.created_at)
+          .sort((a, b) => a.created_at < b.created_at && a.title < b.title)
       };
 
     case actionTypes.runTimer:
@@ -50,6 +50,28 @@ export default (state = initial_state, action) => {
         : { ...data })
       };
 
+    case actionTypes.runTimerFailed:
+      return {
+        ...state,
+        data: state.data.map((data, i) => i == action.task_index
+        ? {
+            ...data,
+            failedToRun: true
+          }
+        : { ...data })
+      };
+
+    case actionTypes.runTimerSuccessful:
+      return {
+        ...state,
+        data: state.data.map((data, i) => i == action.task_index
+        ? {
+            ...data,
+            failedToRun: false
+          }
+        : { ...data })
+      };
+
     case actionTypes.pauseTimer:
       return {
         ...state,
@@ -60,6 +82,28 @@ export default (state = initial_state, action) => {
             secondsSpent: action.secondsSpent,
             is_playing: false
          }
+        : { ...data })
+      };
+
+    case actionTypes.pauseTimerFailed:
+      return {
+        ...state,
+        data: state.data.map((data, i) => i == action.task_index
+        ? {
+            ...data,
+            failedToPause: true
+          }
+        : { ...data })
+      };
+
+    case actionTypes.pauseTimerSuccessful:
+      return {
+        ...state,
+        data: state.data.map((data, i) => i == action.task_index
+        ? {
+            ...data,
+            failedToPause: false
+          }
         : { ...data })
       };
 
